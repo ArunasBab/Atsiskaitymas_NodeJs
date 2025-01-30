@@ -15,6 +15,10 @@ export async function getAllOrders(req, res) {
 export async function getOrderById(req, res) {
   const { id } = req.params;
 
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: "Invalid id" });
+  }
+
   try {
     const order = await OrderModel.findById(id, { __v: 0 });
 
